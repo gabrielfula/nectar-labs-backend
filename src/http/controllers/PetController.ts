@@ -12,6 +12,7 @@ export class PetControllers {
       return response.json({ message: error });
     }
   }
+
   async getbyId(request: Request, response: Response) {
     const { id } = request.params;
 
@@ -31,7 +32,9 @@ export class PetControllers {
       return response.json({ message: error });
     }
   }
+
   async put(request: Request, response: Response) {}
+
   async post(request: Request, response: Response) {
     const { nome, idade, especie, raca, adocao } = request.body;
 
@@ -53,5 +56,20 @@ export class PetControllers {
       return response.json({ message: error });
     }
   }
-  async delete(request: Request, response: Response) {}
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    try {
+      const pets = await prisma.pet.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+
+      return response.json({ message: "Pet successfully deleted" });
+    } catch (error) {
+      return response.json({ message: error });
+    }
+  }
 }
