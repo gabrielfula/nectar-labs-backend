@@ -12,7 +12,25 @@ export class PetControllers {
       return response.json({ message: error });
     }
   }
-  async getbyId(request: Request, response: Response) {}
+  async getbyId(request: Request, response: Response) {
+    const { id } = request.params;
+
+    try {
+      const pets = await prisma.pet.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
+
+      if (!pets) {
+        return response.json({ message: "Pets is not created." });
+      }
+
+      return response.json(pets);
+    } catch (error) {
+      return response.json({ message: error });
+    }
+  }
   async put(request: Request, response: Response) {}
   async post(request: Request, response: Response) {
     const { nome, idade, especie, raca, adocao } = request.body;
