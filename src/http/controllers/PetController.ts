@@ -33,7 +33,31 @@ export class PetControllers {
     }
   }
 
-  async put(request: Request, response: Response) {}
+  async put(request: Request, response: Response) {
+    const { id } = request.params;
+    const { adocao } = request.body;
+
+    const petExist = await prisma.pet.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!petExist) {
+      return response.json({ message: "Pet does not exist" });
+    }
+
+    const updatePets = await prisma.pet.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        adocao,
+      },
+    });
+
+    return response.json({ message: "Pet successfully updated" });
+  }
 
   async post(request: Request, response: Response) {
     const { nome, idade, especie, raca, adocao } = request.body;
