@@ -3,7 +3,15 @@ import { prisma } from "../../../db/prisma";
 import { Request, Response } from "express";
 
 export class PetControllers {
-  async get(request: Request, response: Response) {}
+  async get(request: Request, response: Response) {
+    try {
+      const pets = await prisma.pet.findMany();
+
+      return response.json(pets);
+    } catch (error) {
+      return response.json({ message: error });
+    }
+  }
   async getbyId(request: Request, response: Response) {}
   async put(request: Request, response: Response) {}
   async post(request: Request, response: Response) {
