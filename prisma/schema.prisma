@@ -11,12 +11,12 @@ datasource db {
 }
 
 model Pet {
-  id         Int     @id @default(autoincrement())
-  nome       String
-  idade      Int
-  especie    String
-  raca       String
-  adocao Boolean
+  id      Int     @id @default(autoincrement())
+  nome    String
+  idade   Int
+  especie String
+  raca    String
+  adocao  Boolean
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
