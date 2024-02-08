@@ -62,13 +62,19 @@ export class PetControllers {
   async post(request: Request, response: Response) {
     const { nome, idade, especie, raca, adocao } = request.body;
 
+    if (typeof idade === "string") {
+      const idadeNumber = Number(idade);
+    }
+
+    const idadeNumber =
+      typeof idade !== "number" ? Number(idade) : Number(idade);
     const isAdotted = adocao === "true" ? true : false;
 
     try {
       const pets = await prisma.pet.create({
         data: {
           nome,
-          idade,
+          idade: idadeNumber,
           especie,
           raca,
           adocao: isAdotted,
